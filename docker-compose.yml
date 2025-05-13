@@ -8,7 +8,7 @@ services:
     volumes:
       - ./:/var/www/html
     ports:
-      - "01:01"
+      - "80:80"
     depends_on:
       - db
     restart: always
@@ -25,7 +25,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3301:3301"
+      - "3309:3309"
     restart: always
   
   # Service phpMyAdmin
@@ -37,7 +37,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
-      - "0101:01"
+      - "8080:80"
     depends_on:
       - db
     restart: always

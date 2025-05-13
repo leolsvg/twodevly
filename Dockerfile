@@ -25,4 +25,4 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Exposer le port 80
-EXPOSE 01
+EXPOSE 80
