@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  # Service PHP avec Apache
+  web:
+    build: .
+    container_name: twodevly
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "01:01"
+    depends_on:
+      - db
+    restart: always
+  
+  # Service MySQL
+  db:
+    image: mysql:5.7
+    container_name: mysql_twodevly
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: monsite
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3301:3301"
+    restart: always
+  
+  # Service phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_twodevly
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "0101:01"
+    depends_on:
+      - db
+    restart: always
+
+# Volume pour les données MySQL
+volumes:
+  db_data:
