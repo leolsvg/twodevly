@@ -9,8 +9,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="#home" className="flex items-center gap-2">
-              <div className="size-8 rounded-xl bg-[#16232A]" />
-              <span className="font-semibold tracking-tight">twodevly</span>
+              <Image src="/img/logos/logo_nom.png" alt="Twodevly" width={200} height={200} />
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <a href="#services" className="hover:opacity-70">
@@ -343,7 +342,7 @@ export default function Home() {
       <footer className="border-t border-[#D5E1E4] py-10 bg-white/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#3F5560]">
-            <p>© {new Date().getFullYear()} DuoWeb Studio — TPE étudiante</p>
+            <p className="flex items-center"><Image src="/img/logos/logo_planete.png" alt="Twodevly" width={150} height={150} />© {new Date().getFullYear()}  </p>
             <div className="flex items-center gap-4">
               <a href="#" className="hover:opacity-80">
                 Mentions légales
