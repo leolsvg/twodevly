@@ -273,17 +273,23 @@ export default function Home() {
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "Rapidité et qualité au rendez-vous.",
-              "Design propre, super communication.",
-              "On a gagné en visibilité !",
-            ].map((q, i) => (
+              {
+                quote: "",
+                name: "Sarah Scelles",
+              },
+              {
+                quote: "",
+                name: "Leo",
+              },
+              { quote: "", name: "Joshua" },
+            ].map((t, i) => (
               <figure
                 key={i}
                 className="rounded-3xl border border-[#D5E1E4] bg-white p-6 shadow-sm"
               >
-                <blockquote className="text-sm">“{q}”</blockquote>
+                <blockquote className="text-sm">“{t.quote}”</blockquote>
                 <figcaption className="mt-4 text-xs text-[#3F5560]">
-                  Sarah Scelles
+                  {t.name}
                 </figcaption>
               </figure>
             ))}
