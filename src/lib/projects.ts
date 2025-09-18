@@ -22,7 +22,7 @@ export const projects: Project[] = [
     subtitle: "Site sur-mesure",
     cover: "/img/josephine/hero.png",
     summary:
-      "Conception et développement du site vitrine du restaurant Joséphine (Cherbourg) : identité, menus dynamiques, SEO, réservations.",
+      "Conception et développement du site sur-mesure du restaurant Joséphine (Cherbourg) : identité, menus dynamiques, SEO, réservations.",
     date: "2025",
     role: "Développement full-stack",
     techs: ["Next.js", "React", "Tailwind", "SEO"],

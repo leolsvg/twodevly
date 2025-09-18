@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import WorkSection from "@/components/WorkSection";
 
@@ -9,7 +12,12 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="#home" className="flex items-center gap-2">
-              <Image src="/img/logos/logo_nom.png" alt="Twodevly" width={200} height={200} />
+              <Image
+                src="/img/logos/logo_nom.png"
+                alt="Twodevly"
+                width={200}
+                height={200}
+              />
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <a href="#services" className="hover:opacity-70">
@@ -284,65 +292,21 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-10">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-                Parlons de votre projet
-              </h2>
-              <p className="mt-4 text-[#3F5560] max-w-xl">
-                Dites-nous ce dont vous avez besoin. Réponse en moins de 24h
-                (jours ouvrés).
-              </p>
-              <ul className="mt-6 space-y-2 text-sm">
-                <li>📧 contact@duoweb.studio</li>
-                <li>🔗 LinkedIn / WhatsApp (au choix)</li>
-                <li>📍 France • Remote</li>
-              </ul>
-            </div>
-            <form className="rounded-3xl border border-[#D5E1E4] bg-white p-6 shadow-sm">
-              <div className="grid gap-4">
-                <label className="text-sm">
-                  Nom
-                  <input
-                    className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
-                    placeholder="Votre nom"
-                  />
-                </label>
-                <label className="text-sm">
-                  Email
-                  <input
-                    type="email"
-                    className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
-                    placeholder="vous@exemple.fr"
-                  />
-                </label>
-                <label className="text-sm">
-                  Message
-                  <textarea
-                    rows={4}
-                    className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
-                    placeholder="Décrivez votre besoin"
-                  />
-                </label>
-                <button
-                  type="button"
-                  className="rounded-2xl bg-[#FF5B04] px-5 py-3 text-white text-sm font-medium hover:opacity-90"
-                >
-                  Envoyer
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+      <ContactSection />
 
       {/* FOOTER */}
       <footer className="border-t border-[#D5E1E4] py-10 bg-white/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#3F5560]">
-            <p className="flex items-center"><Image src="/img/logos/logo_planete.png" alt="Twodevly" width={150} height={150} />© {new Date().getFullYear()}  </p>
+            <p className="flex items-center">
+              <Image
+                src="/img/logos/logo_planete.png"
+                alt="Twodevly"
+                width={150}
+                height={150}
+              />
+              © {new Date().getFullYear()}
+            </p>
             <div className="flex items-center gap-4">
               <a href="#" className="hover:opacity-80">
                 Mentions légales
@@ -358,5 +322,144 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+/** ----- Contact section with Web3Forms (same design) ----- */
+function ContactSection() {
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">(
+    "idle"
+  );
+  const [msg, setMsg] = useState<string>("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+    setMsg("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    // Web3Forms endpoint
+    try {
+      const r = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await r.json();
+      if (data.success) {
+        setStatus("ok");
+        setMsg("Message envoyé ! Je reviens vers vous rapidement.");
+        form.reset();
+      } else {
+        setStatus("err");
+        setMsg(data.message || "Une erreur est survenue. Réessayez.");
+      }
+    } catch {
+      setStatus("err");
+      setMsg("Impossible d’envoyer le message pour le moment.");
+    }
+  }
+
+  return (
+    <section id="contact" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-10">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              Parlons de votre projet
+            </h2>
+            <p className="mt-4 text-[#3F5560] max-w-xl">
+              Dites-nous ce dont vous avez besoin. Réponse en moins de 24h
+              (jours ouvrés).
+            </p>
+            <ul className="mt-6 space-y-2 text-sm">
+              <li>📧 contact@twodevly.com</li>
+              <li>🔗 LinkedIn / WhatsApp (au choix)</li>
+              <li>📍 France • Remote</li>
+            </ul>
+          </div>
+
+          {/* Formulaire identique visuellement, branché Web3Forms */}
+          <form
+            onSubmit={onSubmit}
+            className="rounded-3xl border border-[#D5E1E4] bg-white p-6 shadow-sm"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="e3b4f9c1-f5c8-47a6-842c-674eea02867e"
+            />
+            <input
+              type="hidden"
+              name="subject"
+              value="Nouveau message via le site"
+            />
+            <input
+              type="hidden"
+              name="from_name"
+              value="Formulaire de contact"
+            />
+            {/* Redirection optionnelle après succès */}
+            {/* <input type="hidden" name="redirect" value="https://ton-domaine.fr/merci" /> */}
+            {/* Honeypot anti-spam */}
+            <input type="checkbox" name="botcheck" className="hidden" />
+
+            <div className="grid gap-4">
+              <label className="text-sm">
+                Nom
+                <input
+                  name="name"
+                  required
+                  className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
+                  placeholder="Votre nom"
+                />
+              </label>
+
+              <label className="text-sm">
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
+                  placeholder="vous@exemple.fr"
+                />
+              </label>
+
+              <label className="text-sm">
+                Message
+                <textarea
+                  name="message"
+                  rows={4}
+                  required
+                  className="mt-1 w-full rounded-xl border border-[#CBDADF] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#16232A]"
+                  placeholder="Décrivez votre besoin"
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="rounded-2xl bg-[#FF5B04] px-5 py-3 text-white text-sm font-medium hover:opacity-90 disabled:opacity-60"
+              >
+                {status === "sending" ? "Envoi..." : "Envoyer"}
+              </button>
+
+              {status !== "idle" && msg && (
+                <p
+                  className={
+                    status === "ok"
+                      ? "text-sm text-green-700"
+                      : "text-sm text-red-700"
+                  }
+                >
+                  {msg}
+                </p>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 }
