@@ -283,7 +283,7 @@ export default function Home() {
               >
                 <blockquote className="text-sm">“{q}”</blockquote>
                 <figcaption className="mt-4 text-xs text-[#3F5560]">
-                  Client satisfait
+                  Sarah Scelles
                 </figcaption>
               </figure>
             ))}
