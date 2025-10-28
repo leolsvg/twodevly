@@ -99,7 +99,7 @@ export default function Home() {
 
               <div className="absolute -bottom-6 -left-6 hidden md:block rounded-2xl bg-white border border-[#D5E1E4] shadow-sm p-4">
                 <p className="text-xs text-[#3F5560]">⏱ Livraison rapide</p>
-                <p className="text-xs font-medium">Site vitrine dès 799€</p>
+                <p className="text-xs font-medium">Site vitrine dès 500€</p>
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function Home() {
       {/* SERVICES */}
       <section id="services" className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex items-end justify-between">
+          <div className="mb-10 ">
             <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
               Services
             </h2>
@@ -118,7 +118,7 @@ export default function Home() {
               associations.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-6">
             {[
               {
                 title: "Site vitrine",
@@ -128,17 +128,7 @@ export default function Home() {
                   "Design moderne",
                   "Formulaire de contact",
                 ],
-                price: "dès 799€",
-              },
-              {
-                title: "E-commerce",
-                desc: "Vendez en ligne simplement avec un parcours d’achat fluide.",
-                points: [
-                  "Paiement sécurisé",
-                  "Catalogue produit",
-                  "SEO inclus",
-                ],
-                price: "dès 1 499€",
+                price: "dès 500€",
               },
               {
                 title: "Sur-mesure",
@@ -250,8 +240,14 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="rounded-3xl border border-[#D5E1E4] bg-white aspect-[4/5] grid place-items-center text-[#5B7380] text-sm">
-              Vos photos / avatars
+            <div className="rounded-3xl border border-[#D5E1E4] bg-white aspect-[4/5] overflow-hidden">
+              <Image
+                src="/img/BOGOSS.JPG"
+                alt="Photo de l'équipe"
+                width={500}
+                height={600}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
