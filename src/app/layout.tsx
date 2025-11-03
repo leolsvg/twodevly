@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Twodevly",
   description:
-    "Agence web étudiante Twodevly : sites rapides, élégants et efficaces. Vitrine, e-commerce, SEO, hébergement & maintenance. Basés en France, 100% remote.",
+    "Agence web Twodevly : sites rapides, élégants et efficaces. Vitrine, e-commerce, SEO, hébergement & maintenance. Basés en France, 100% remote.",
 };
 
 export default function RootLayout({
