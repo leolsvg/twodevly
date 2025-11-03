@@ -155,6 +155,64 @@ function WorkSection() {
               <div className="flex items-center text-[#FF5B04] text-sm font-medium group-hover:gap-2 transition-all">
                 Voir le projet
                 <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute -bottom-6 -left-6 hidden md:block rounded-2xl bg-white border border-[#D5E1E4] shadow-sm p-4">
+                <p className="text-xs text-[#3F5560]">⏱ Livraison rapide</p>
+                <p className="text-xs font-medium">Site vitrine dès 500€</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 ">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              Services
+            </h2>
+            <p className="text-sm text-[#3F5560] max-w-md">
+              Offres simples et transparentes, adaptées aux TPE, indépendants et
+              associations.
+            </p>
+          </div>
+          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-6">
+            {[
+              {
+                title: "Site vitrine",
+                desc: "Présentez votre activité avec un site rapide, clair et responsive.",
+                points: [
+                  "1 à 5 pages",
+                  "Design moderne",
+                  "Formulaire de contact",
+                ],
+                price: "dès 500€",
+              },
+              {
+                title: "Sur-mesure",
+                desc: "Fonctionnalités spécifiques pour besoins uniques.",
+                points: ["Back-office", "Intégrations API", "Support dédié"],
+                price: "sur devis",
+              },
+            ].map((s) => (
+              <div
+                key={s.title}
+                className="rounded-3xl border border-[#D5E1E4] bg-white p-6 shadow-sm hover:shadow transition-shadow"
+              >
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#EAF3F5] px-3 py-1 text-xs text-[#16232A]">
+                  <span className="inline-block size-1.5 rounded-full bg-[#16232A]" />{" "}
+                  {s.price}
+                </div>
+                <h3 className="text-lg font-semibold">{s.title}</h3>
+                <p className="mt-2 text-sm text-[#3F5560]">{s.desc}</p>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {s.points.map((p) => (
+                    <li key={p} className="flex items-center gap-2">
+                      <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
+                      {p}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}
@@ -249,6 +307,46 @@ export default function Home() {
           <a href="#home" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5B04] to-[#ff7b33] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Code2 className="w-5 h-5 text-white" />
+      {/* ABOUT */}
+      <section id="about" className="py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-3 gap-10 items-center">
+            <div className="lg:col-span-2">
+              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+                Qui sommes-nous ?
+              </h2>
+              <p className="mt-4 text-[#3F5560] max-w-2xl">
+                Deux étudiants développeurs web, complémentaires en front-end et
+                back-end. Nous maîtrisons React/Next.js, Tailwind, et les bonnes
+                pratiques SEO/Accessibilité.
+              </p>
+              <ul className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
+                  Responsive & performant
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
+                  Orienté résultats
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
+                  Hébergement & domaine
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
+                  Suivi & maintenance
+                </li>
+              </ul>
+            </div>
+            <div className="rounded-3xl border border-[#D5E1E4] bg-white aspect-[4/5] overflow-hidden">
+              <Image
+                src="/img/BOGOSS.JPG"
+                alt="Photo de l'équipe"
+                width={500}
+                height={600}
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-xl font-bold">Twodevly</span>
           </a>
