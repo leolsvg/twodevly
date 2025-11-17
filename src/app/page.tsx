@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import {
   cubicBezier,
   easeInOut,
@@ -19,6 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useRef } from "react";
+import type { FormEvent } from "react";
 
 // === ANIMATIONS GLOBALES ===
 const fadeUp = {
@@ -42,7 +45,7 @@ const scaleIn = {
 // === SECTION STATS ===
 function StatsSection() {
   const stats = [
-    { value: "15+", label: "Projets réalisés" },
+    { value: "5+", label: "Projets réalisés" },
     { value: "100%", label: "Clients satisfaits" },
     { value: "24h", label: "Temps de réponse" },
     { value: "2", label: "Experts dévoués" },
@@ -81,32 +84,35 @@ function StatsSection() {
 function WorkSection() {
   const projects = [
     {
-      title: "E-commerce Mode",
-      category: "E-commerce",
-      desc: "Boutique en ligne avec paiement sécurisé et gestion de stock complète.",
-      tags: ["Next.js", "Stripe", "SEO"],
+      title: "Cinélabs",
+      image: "/img/cinelabs/hero.png",
+      desc: "Site vitrine pour studio vidéo avec mise en avant des films et pages dédiées.",
+      tags: ["Next.js", "TypeScript", "TailwindCSS"],
     },
     {
-      title: "Site Vitrine Artisan",
-      category: "Vitrine",
-      desc: "Présentation moderne d'un artisan local avec galerie et formulaire de contact.",
-      tags: ["React", "Responsive", "Performance"],
+      title: "Joséphine",
+      image: "/img/josephine/hero.png",
+      desc: "Site de restaurant avec carte, photos et parcours de réservation.",
+      tags: ["Next.js", "React", "SEO"],
     },
     {
-      title: "Plateforme SaaS",
-      category: "Sur-mesure",
-      desc: "Application web complète avec dashboard et API personnalisée.",
-      tags: ["Full-stack", "API", "Dashboard"],
+      title: "Portfolio Eliott",
+      image: "/img/portfolio-eliott/presentation.png",
+      desc: "Portfolio personnel présentant projets, compétences et coordonnées.",
+      tags: ["Next.js", "TypeScript", "Framer Motion"],
+    },
+    {
+      title: "Portfolio Léo",
+      image: "/img/portfolio-leo/presentation.png",
+      desc: "Portfolio moderne avec sections projets et contact, design minimaliste.",
+      tags: ["Next.js", "TailwindCSS", "Vercel"],
     },
   ];
 
   return (
-    <motion.section
-      id="réalisations"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={fadeUp}
+    <>
+      <motion.section
+      id="realisations"
       className="py-24 bg-gradient-to-b from-white to-[#F8FBFC]"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -121,48 +127,50 @@ function WorkSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((p, i) => (
-            <motion.div
-              key={p.title}
-              variants={scaleIn}
-              custom={i * 0.15}
-              whileHover={{
-                y: -6,
-                scale: 1.02,
-                boxShadow: "0 10px 40px rgba(255,91,4,0.15)",
-              }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="group relative rounded-3xl border border-[#D5E1E4] bg-white p-8 shadow-sm hover:shadow-lg transition-all duration-300"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-[#FF5B04]/70" />
-              <span className="inline-block px-3 py-1 bg-[#FFF5F0] text-[#FF5B04] text-xs font-medium rounded-full mb-3">
-                {p.category}
-              </span>
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-[#FF5B04] transition-colors">
-                {p.title}
-              </h3>
-              <p className="text-sm text-[#3F5560] mb-4">{p.desc}</p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {p.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-1 bg-[#F8FBFC] text-[#16232A] text-xs rounded-md border border-[#E4EEF0]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center text-[#FF5B04] text-sm font-medium group-hover:gap-2 transition-all">
-                Voir le projet
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute -bottom-6 -left-6 hidden md:block rounded-2xl bg-white border border-[#D5E1E4] shadow-sm p-4">
-                <p className="text-xs text-[#3F5560]">⏱ Livraison rapide</p>
-                <p className="text-xs font-medium">Site vitrine dès 500€</p>
-              </div>
-            </div>
-          </div>
+          {projects.map((p, i) => {
+            const slug = p.title
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-+|-+$/g, '');
+            return (
+              <Link key={p.title} href={`/work/${slug}`} className="group block">
+                <motion.div
+                  variants={scaleIn}
+                  custom={i * 0.15}
+                  className="relative rounded-3xl border border-[#D5E1E4] bg-white p-6 shadow-sm hover:shadow-md transition-transform duration-150 ease-out hover:scale-105"
+                >
+                  <div className="mb-4 overflow-hidden rounded-xl">
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      width={600}
+                      height={360}
+                      className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-150 ease-out"
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 group-hover:text-[#FF5B04] transition-colors">
+                    {p.title}
+                  </h3>
+                  <p className="text-sm text-[#3F5560] mb-4">{p.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {p.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 bg-[#F8FBFC] text-[#16232A] text-xs rounded-md border border-[#E4EEF0]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </Link>
+            );
+          })}
         </div>
-      </section>
+      </div>
+    </motion.section>
 
       {/* SERVICES */}
       <section id="services" className="py-20">
@@ -186,7 +194,7 @@ function WorkSection() {
                   "Design moderne",
                   "Formulaire de contact",
                 ],
-                price: "dès 500€",
+                price: "dès 800€",
               },
               {
                 title: "Sur-mesure",
@@ -214,11 +222,11 @@ function WorkSection() {
                   ))}
                 </ul>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.section>
+      </section>
+    </>
   );
 }
 
@@ -305,73 +313,41 @@ export default function Home() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
           <a href="#home" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5B04] to-[#ff7b33] flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Code2 className="w-5 h-5 text-white" />
-      {/* ABOUT */}
-      <section id="about" className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-10 items-center">
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-                Qui sommes-nous ?
-              </h2>
-              <p className="mt-4 text-[#3F5560] max-w-2xl">
-                Deux étudiants développeurs web, complémentaires en front-end et
-                back-end. Nous maîtrisons React/Next.js, Tailwind, et les bonnes
-                pratiques SEO/Accessibilité.
-              </p>
-              <ul className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-                <li className="flex items-center gap-2">
-                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
-                  Responsive & performant
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
-                  Orienté résultats
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
-                  Hébergement & domaine
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="inline-block size-1.5 rounded-full bg-[#075065]" />{" "}
-                  Suivi & maintenance
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-3xl border border-[#D5E1E4] bg-white aspect-[4/5] overflow-hidden">
-              <Image
-                src="/img/BOGOSS.JPG"
-                alt="Photo de l'équipe"
-                width={500}
-                height={600}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-xl font-bold">Twodevly</span>
+            <Image
+              src="/img/logos/logo_nom.png"
+              alt="Twodevly"
+              width={140}
+              height={30}
+              className="h-8 w-auto"
+              priority
+            />
           </a>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             {["Services", "Réalisations", "Process", "À propos", "Contact"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item
-                    .toLowerCase()
-                    .replace("à ", "")
-                    .replace(" ", "")}`}
-                  className="relative hover:text-[#FF5B04] transition-colors group"
-                >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF5B04] group-hover:w-full transition-all" />
-                </a>
-              )
+              (item) => {
+                const id = item
+                  .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '') // remove accents
+                  .replace(/\s+/g, '');
+                return (
+                  <a
+                    key={item}
+                    href={`#${id}`}
+                    className="relative hover:text-[#FF5B04] transition-colors group"
+                  >
+                    {item}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF5B04] group-hover:w-full transition-all" />
+                  </a>
+                );
+              }
             )}
           </nav>
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#FF5B04] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#ff7b33] hover:scale-105 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#FF5B04] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#ff7b33] transition-colors"
           >
             <Zap className="w-4 h-4" />
             Demander un devis
@@ -505,14 +481,24 @@ export default function Home() {
                 <Mail className="w-6 h-6 text-[#FF5B04]" />
                 <div>
                   <h4 className="font-semibold text-lg">Email</h4>
-                  <p className="text-white/80">contact@twodevly.com</p>
+                  <a
+                    href="mailto:contact@twodevly.com"
+                    className="text-white/80 hover:text-[#FF5B04] transition-colors"
+                  >
+                    contact@twodevly.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-[#FF5B04]" />
                 <div>
                   <h4 className="font-semibold text-lg">Téléphone</h4>
-                  <p className="text-white/80">+33 6 12 34 56 78</p>
+                  <a
+                    href="tel:+33646546106"
+                    className="text-white/80 hover:text-[#FF5B04] transition-colors"
+                  >
+                    +33 6 46 54 61 06
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -520,7 +506,7 @@ export default function Home() {
             <motion.form
               variants={scaleIn}
               className="rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-8 shadow-2xl"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={(e: FormEvent) => e.preventDefault()}
             >
               <div className="grid gap-6">
                 <input
@@ -542,8 +528,6 @@ export default function Home() {
                   required
                 ></textarea>
                 <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
                   type="submit"
                   className="w-full rounded-xl bg-gradient-to-r from-[#FF5B04] to-[#ff7b33] py-3.5 font-semibold text-white shadow-lg shadow-[#FF5B04]/30 hover:shadow-[#FF5B04]/50"
                 >
@@ -558,9 +542,18 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="border-t border-white/10 bg-[#0F1A1F] text-white py-10 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/70">
-            © {new Date().getFullYear()} Twodevly. Tous droits réservés.
-          </p>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/img/logos/logo_planete.png"
+              alt="Twodevly planète"
+              width={36}
+              height={36}
+              className="h-8 w-auto"
+            />
+            <p className="text-sm text-white/70">
+              © {new Date().getFullYear()} Twodevly. Tous droits réservés.
+            </p>
+          </div>
           <div className="flex items-center gap-6 text-sm text-white/60">
             {["Mentions légales", "CGU", "Confidentialité"].map((l) => (
               <a
