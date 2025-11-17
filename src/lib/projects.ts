@@ -47,18 +47,18 @@ export const projects: Project[] = [
 
   // Exemples de placeholders (supprime/complète)
   {
-    slug: "projet-2",
-    title: "Cinelabs",
-    subtitle: "site vitrine",
-    cover: "/img/cineLabs/hero.png",
+    slug: "cinelabs",
+    title: "Cinélabs",
+    subtitle: "Site vitrine",
+    cover: "/img/cinelabs/hero.png",
     summary:
-      "site vitrine regroupant tout les films ainsi que leurs bande d'annonce, notes, acteurs, date, genre, résumés. Dans le cadre d'un projet fictif.",
+      "Site vitrine regroupant tous les films ainsi que leur bande‑annonce, notes, acteurs, date, genre et résumé. Projet fictif.",
     date: "2024",
     role: "Dév Front",
-    techs: ["Javascript", "API"],
+    techs: ["Next.js", "TypeScript", "API"],
     siteUrl: "#",
     repoUrl: "#",
-    screenshots: ["/img/cinelabs/film.png", "/img/cinelabs/contact.png"],
+    screenshots: ["/img/cinelabs/hero.png", "/img/cinelabs/film.png", "/img/cinelabs/contact.png"],
     features: ["Recherche", "Bande d'annonce", "Formulaire de contact"],
   },
 ];
