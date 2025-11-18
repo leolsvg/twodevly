@@ -11,8 +11,9 @@ export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const p = projects.find((x) => x.slug === params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const p = projects.find((x) => x.slug === slug);
   if (!p) return {};
   return {
     title: `${p.title} | twodevly`,
@@ -26,8 +27,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function ProjectPage({ params }: Props) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return notFound();
 
   return (
@@ -157,19 +159,6 @@ export default function ProjectPage({ params }: Props) {
                         className="underline underline-offset-4 decoration-[#FF5B04] hover:opacity-80"
                       >
                         {project.siteUrl.replace(/^https?:\/\//, "")}
-                      </a>
-                    </li>
-                  )}
-                  {project.repoUrl && (
-                    <li>
-                      📦 Code :{" "}
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="underline underline-offset-4 decoration-[#FF5B04] hover:opacity-80"
-                      >
-                        repo GitHub
                       </a>
                     </li>
                   )}

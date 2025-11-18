@@ -12,7 +12,6 @@ import {
 } from "framer-motion";
 import {
   CheckCircle2,
-  ChevronRight,
   Code2,
   Mail,
   Phone,
@@ -20,8 +19,8 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { useRef } from "react";
-import type { FormEvent } from "react";
+import { useRef, useEffect } from "react";
+import ContactForm from "@/components/ContactForm";
 
 // === ANIMATIONS GLOBALES ===
 const fadeUp = {
@@ -42,6 +41,17 @@ const scaleIn = {
   }),
 };
 
+// Fonction pour le smooth scroll
+const smoothScrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+};
+
 // === SECTION STATS ===
 function StatsSection() {
   const stats = [
@@ -53,6 +63,7 @@ function StatsSection() {
 
   return (
     <motion.section
+      id="stats"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -84,28 +95,28 @@ function StatsSection() {
 function WorkSection() {
   const projects = [
     {
-      title: "Cinélabs",
-      image: "/img/cinelabs/hero.png",
-      desc: "Site vitrine pour studio vidéo avec mise en avant des films et pages dédiées.",
-      tags: ["Next.js", "TypeScript", "TailwindCSS"],
-    },
-    {
       title: "Joséphine",
       image: "/img/josephine/hero.png",
       desc: "Site de restaurant avec carte, photos et parcours de réservation.",
       tags: ["Next.js", "React", "SEO"],
     },
     {
-      title: "Portfolio Eliott",
-      image: "/img/portfolio-eliott/presentation.png",
-      desc: "Portfolio personnel présentant projets, compétences et coordonnées.",
-      tags: ["Next.js", "TypeScript", "Framer Motion"],
-    },
-    {
       title: "Portfolio Léo",
       image: "/img/portfolio-leo/presentation.png",
       desc: "Portfolio moderne avec sections projets et contact, design minimaliste.",
       tags: ["Next.js", "TailwindCSS", "Vercel"],
+    },
+    {
+      title: "Portfolio Eliott",
+      image: "/img/portfolio-eliott/presentation.png",
+      desc: "Portfolio personnel présentant projets, compétences et coordonnées.",
+      tags: ["React", "Tailwind CSS", "Vercel"],
+    },
+    {
+      title: "Cinélabs",
+      image: "/img/cinelabs/hero.png",
+      desc: "Site vitrine pour studio vidéo avec mise en avant des films et pages dédiées.",
+      tags: ["HTML", "CSS", "JavaScript"],
     },
   ];
 
@@ -277,13 +288,13 @@ function ProcessSection() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((s, i) => (
-            <motion.div key={s.title} variants={fadeUp} custom={i * 0.2}>
-              <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-all duration-300">
+            <motion.div key={s.title} variants={fadeUp} custom={i * 0.2} className="h-full">
+              <div className="h-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:bg-white/10 transition-all duration-300 flex flex-col">
                 <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#FF5B04]/20 group-hover:bg-[#FF5B04] transition-colors">
                   <s.icon className="w-8 h-8 text-[#FF5B04]" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
-                <p className="text-white/70">{s.desc}</p>
+                <p className="text-white/70 flex-grow">{s.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -298,9 +309,25 @@ export default function Home() {
   const heroRef = useRef(null);
   const { scrollY } = useScroll();
   const yHero = useTransform(scrollY, [0, 300], [0, 120]);
-  const opacityHero = useTransform(scrollY, [0, 200], [1, 0.8]);
   const scaleHero = useTransform(scrollY, [0, 300], [1, 0.97]);
   const ySpringHero = useSpring(yHero, { stiffness: 70, damping: 25 });
+
+  // Auto-scroll vers la fin de la barre des statistiques au chargement
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        const rect = statsSection.getBoundingClientRect();
+        const scrollTarget = window.pageYOffset + rect.bottom - window.innerHeight + 50;
+        window.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth'
+        });
+      }
+    }, 1000); // Délai de 1 seconde pour laisser la page se charger
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#E4EEF0] text-[#16232A] scroll-smooth">
@@ -312,7 +339,13 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#D5E1E4]"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
-          <a href="#home" className="flex items-center gap-2 group">
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              smoothScrollToSection('home');
+            }}
+            className="flex items-center gap-2 group cursor-pointer bg-transparent border-none"
+          >
             <Image
               src="/img/logos/logo_nom.png"
               alt="Twodevly"
@@ -321,7 +354,7 @@ export default function Home() {
               className="h-8 w-auto"
               priority
             />
-          </a>
+          </button>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             {["Services", "Réalisations", "Process", "À propos", "Contact"].map(
@@ -332,26 +365,35 @@ export default function Home() {
                   .replace(/[\u0300-\u036f]/g, '') // remove accents
                   .replace(/\s+/g, '');
                 return (
-                  <a
+                  <button
                     key={item}
-                    href={`#${id}`}
-                    className="relative hover:text-[#FF5B04] transition-colors group"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScrollToSection(id === 'services' ? 'services' : 
+                                           id === 'realisations' ? 'realisations' :
+                                           id === 'process' ? 'process' :
+                                           id === 'apropos' ? 'apropos' : 'contact');
+                    }}
+                    className="relative hover:text-[#FF5B04] transition-colors group cursor-pointer bg-transparent border-none"
                   >
                     {item}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF5B04] group-hover:w-full transition-all" />
-                  </a>
+                  </button>
                 );
               }
             )}
           </nav>
 
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#FF5B04] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#ff7b33] transition-colors"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              smoothScrollToSection('contact');
+            }}
+            className="inline-flex items-center gap-2 rounded-xl bg-[#FF5B04] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#ff7b33] transition-colors cursor-pointer border-none"
           >
             <Zap className="w-4 h-4" />
             Demander un devis
-          </a>
+          </button>
         </div>
       </motion.header>
 
@@ -362,7 +404,7 @@ export default function Home() {
         className="relative overflow-hidden bg-gradient-to-br from-[#E4EEF0] via-[#F8FBFC] to-white pt-32"
       >
         <motion.div
-          style={{ y: ySpringHero, opacity: opacityHero, scale: scaleHero }}
+          style={{ y: ySpringHero, scale: scaleHero }}
           className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32"
         >
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold max-w-4xl leading-tight">
@@ -503,38 +545,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <motion.form
-              variants={scaleIn}
-              className="rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-8 shadow-2xl"
-              onSubmit={(e: FormEvent) => e.preventDefault()}
-            >
-              <div className="grid gap-6">
-                <input
-                  type="text"
-                  placeholder="Votre nom"
-                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-[#FF5B04]"
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="vous@exemple.fr"
-                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-[#FF5B04]"
-                  required
-                />
-                <textarea
-                  rows={4}
-                  placeholder="Décrivez votre besoin..."
-                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/50 focus:ring-2 focus:ring-[#FF5B04]"
-                  required
-                ></textarea>
-                <motion.button
-                  type="submit"
-                  className="w-full rounded-xl bg-gradient-to-r from-[#FF5B04] to-[#ff7b33] py-3.5 font-semibold text-white shadow-lg shadow-[#FF5B04]/30 hover:shadow-[#FF5B04]/50"
-                >
-                  Envoyer le message
-                </motion.button>
-              </div>
-            </motion.form>
+            <ContactForm />
           </div>
         </div>
       </motion.section>
@@ -555,15 +566,24 @@ export default function Home() {
             </p>
           </div>
           <div className="flex items-center gap-6 text-sm text-white/60">
-            {["Mentions légales", "CGU", "Confidentialité"].map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="hover:text-[#FF5B04] transition-colors"
-              >
-                {l}
-              </a>
-            ))}
+            <a
+              href="/mentions-legales"
+              className="hover:text-[#FF5B04] transition-colors"
+            >
+              Mentions légales
+            </a>
+            <a
+              href="/cgu"
+              className="hover:text-[#FF5B04] transition-colors"
+            >
+              CGU
+            </a>
+            <a
+              href="/politique-confidentialite"
+              className="hover:text-[#FF5B04] transition-colors"
+            >
+              Confidentialité
+            </a>
           </div>
         </div>
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#FF5B04] via-[#ff7b33] to-[#FF5B04]" />
