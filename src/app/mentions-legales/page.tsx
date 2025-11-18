@@ -40,9 +40,11 @@ export default function MentionsLegales() {
               <div className="bg-[#F8FBFC] rounded-xl p-6">
                 <p><strong>Raison sociale :</strong> TwoDevly</p>
                 <p><strong>Statut juridique :</strong> Auto-entrepreneur</p>
-                <p><strong>Adresse :</strong> [À compléter]</p>
+                <p><strong>Adresse du siège social :</strong> 34 LES BERTRANDS - 50470 TOLLEVAST</p>
                 <p><strong>Email :</strong> contact@twodevly.com</p>
-                <p><strong>Directeur de la publication :</strong> [À compléter]</p>
+                <p><strong>Directeur de la publication :</strong> Pissis Eliott</p>
+                <p><strong>SIRET :</strong> 94440951500011</p>
+                <p><strong>Code APE :</strong> 6201Z - Programmation informatique</p>
               </div>
             </section>
 
@@ -50,8 +52,8 @@ export default function MentionsLegales() {
               <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">3. Hébergeur</h2>
               <div className="bg-[#F8FBFC] rounded-xl p-6">
                 <p><strong>Nom :</strong> Vercel Inc.</p>
-                <p><strong>Adresse :</strong> 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis</p>
-                <p><strong>Site web :</strong> <a href="https://vercel.com" className="text-[#FF5B04] hover:underline">vercel.com</a></p>
+                <p><strong>Adresse :</strong> 340 S Lemon Ave, #4133, Walnut, CA 91789, États-Unis</p>
+                <p><strong>Site web :</strong> <a href="https://vercel.com" target="_blank" rel="noreferrer" className="text-[#FF5B04] hover:underline">vercel.com</a></p>
               </div>
             </section>
 
@@ -62,9 +64,9 @@ export default function MentionsLegales() {
                 et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les 
                 documents téléchargeables et les représentations iconographiques et photographiques.
               </p>
-              <p>
-                La reproduction de tout ou partie de ce site sur un support électronique quelconque est formellement 
-                interdite sauf autorisation expresse du directeur de la publication.
+              <p className="mb-4">
+                La reproduction de tout ou partie de ce site sur un support électronique quel qu&apos;il soit est 
+                formellement interdite sauf autorisation expresse du directeur de la publication.
               </p>
             </section>
 
@@ -74,33 +76,47 @@ export default function MentionsLegales() {
                 Les informations contenues sur ce site sont aussi précises que possible et le site est périodiquement 
                 remis à jour, mais peut toutefois contenir des inexactitudes, des omissions ou des lacunes.
               </p>
-              <p>
+              <p className="mb-4">
                 Si vous constatez une lacune, erreur ou ce qui parait être un dysfonctionnement, merci de bien vouloir 
-                le signaler par email en décrivant le problème de la manière la plus précise possible.
+                le signaler par email à l&apos;adresse contact@twodevly.com, en décrivant le problème de la manière la plus 
+                précise possible.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">6. Liens hypertextes</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">6. Données personnelles</h2>
               <p className="mb-4">
-                Les sites internet peuvent proposer des liens vers d&apos;autres sites internet ou d&apos;autres ressources 
-                disponibles sur Internet. TwoDevly ne dispose d&apos;aucun moyen pour contrôler les sites en connexion 
-                avec ses sites internet.
+                Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et 
+                Libertés, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression des données vous concernant.
               </p>
-              <p>
-                TwoDevly ne répond pas de la disponibilité de tels sites et sources externes, ni ne la garantit. 
-                Elle ne peut être tenue pour responsable de tout dommage, de quelque nature que ce soit, résultant 
-                du contenu de ces sites ou sources externes.
+              <p className="mb-4">
+                Pour plus d&apos;informations sur la gestion de vos données personnelles, consultez notre 
+                <Link href="/politique-confidentialite" className="text-[#FF5B04] hover:underline">
+                  {" "}politique de confidentialité
+                </Link>.
               </p>
             </section>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">7. Droit applicable</h2>
-              <p>
-                Tout litige en relation avec l&apos;usage du site est soumis au droit français. En dehors des cas où la 
-                loi ne le permet pas, il est fait attribution exclusive de juridiction aux tribunaux compétents.
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">7. Cookies</h2>
+              <p className="mb-4">
+                Ce site peut utiliser des cookies pour améliorer l&apos;expérience utilisateur et analyser le trafic. 
+                L&apos;utilisateur peut configurer son navigateur pour refuser les cookies, bien que cela puisse affecter 
+                certaines fonctionnalités du site.
               </p>
             </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4 text-[#FF5B04]">8. Droit applicable</h2>
+              <p className="mb-4">
+                Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux 
+                français seront seuls compétents.
+              </p>
+            </section>
+
+            <div className="text-sm text-[#3F5560] mt-8 p-4 bg-[#F8FBFC] rounded-xl">
+              <p><strong>Dernière mise à jour :</strong> novembre 2024</p>
+            </div>
           </div>
         </div>
       </div>
